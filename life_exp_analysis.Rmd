@@ -9,6 +9,21 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, comment="", echo=FALSE}
-writeLines(readLines("life_exp_analysis.Rmd"))
+```{r}
+library(gapminder)
+library(tidyverse)
+data("gapminder_unfiltered")
 ```
+```{r}
+gapminder_unfiltered %>% 
+  group_by(year) %>% 
+  filter(lifeExp==max(lifeExp)) %>% 
+  ungroup() %>% 
+  select(year,country,lifeExp) %>% 
+  arrange(year) ->
+  max_life
+```
+```{r}
+max_life
+```
+
