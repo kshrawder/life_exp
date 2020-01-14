@@ -15,15 +15,26 @@ library(tidyverse)
 data("gapminder_unfiltered")
 ```
 ```{r}
-gapminder_unfiltered %>% 
-  group_by(year) %>% 
-  filter(lifeExp==max(lifeExp)) %>% 
-  ungroup() %>% 
-  select(year,country,lifeExp) %>% 
+data("gapminder_unfiltered")
+    
+gapminder_unfiltered %>%
+  group_by(year) %>%
+  filter(lifeExp == max(lifeExp)) %>%
+  ungroup() %>%
+  select(year, country, lifeExp) %>%
   arrange(year) ->
-  max_life
-```
-```{r}
-max_life
+  sumdat
 ```
 
+
+```{r, eval=TRUE, echo=FALSE}
+sumdat %>%
+  ggplot(aes(x = year, y = lifeExp)) +
+  geom_point(aes(color = country)) +
+  geom_point(pch = 1) + 
+  theme_bw() +
+  geom_smooth(method = "lm", se = FALSE) +
+  xlab("Year") +
+  ylab("Maximum Life Expectancy") +
+  scale_color_discrete(name = "Country")
+```
